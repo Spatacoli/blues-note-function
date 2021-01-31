@@ -17,13 +17,10 @@ namespace Spatacoli.Blues
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var data = JsonConvert.DeserializeObject<TempData>(requestBody);
 
-            string responseMessage = $"Temp is {data.value} and the calibration is {data.calibration}";
-            log.LogInformation(responseMessage);
+            log.LogInformation($"Temp is {data.value} and the calibration is {data.calibration}");
             return new RowData 
             { 
                 PartitionKey = "Http",
